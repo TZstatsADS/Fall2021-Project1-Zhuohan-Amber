@@ -64,10 +64,8 @@ Because in this project, we mainly focus on women topic in Philosophy; therefore
 # 3. Data Processing
 
 #### 3.1 Text Proprocessing
-For topic modeling, I prepare a corpus of sentence snipets as follows: I remove punctuations, lowercase, common(nonsense) words, duplicate key words and blankspaces. 
 
-#### 3.3 Data Analysis: Sentiment Analysis
-Sentiment analysis can help us determine whether the sentence is positive, negative or neutral. It is useful for us to gain an overview of all schools' opinions behind certain topics. And we can see how philosophers shift between different sentiments.
+We select philosophy text data with female topic and to see text topics variation over different schools with emotions
 
 ```{r,echo=FALSE,warning=FALSE}
 #Dataset on all schools with txt related to female
@@ -83,9 +81,10 @@ head(all_text_f)
 all_text_f <- data.frame(all_text_f)
 colnames(all_text_f) <- "sentence_lowered"
 all_text_f_date <- merge(all_text_f, textdata, by="sentence_lowered")
-head(all_text_f_date)
+
 all_txt <- all_text_f_date$sentence_lowered
 
+#write.csv(all_text_f_date, "../Desktop/text_with_female_topic.csv")
 
 #For all schools!
 corpus <- iconv(all_txt, to = 'utf-8-mac')
@@ -144,14 +143,15 @@ for(i in 1:nrow(all_text_f_date)){
   }
 }
 
-head(sentence.list)
 
+head(all_text_f_date)
 ```
 
 
 #### 3.2 Data Analysis: Process Variables for Analysis
+
 In the following, I want to check whether women topic in philosophy becomes more popular. Whether there is an increased empirical research on women? So I drew 3 graphs here separately analyzed the weights of each school's topic on women.
-First two barcharts show that school Feminism spent lots of time exploring women social positions. This is what we expect, but besides Feminism,  Aristotle tends to have more texts related to women. In additionm, in year 1949, female is a popular topic.  
+First two barcharts show that school Feminism spent lots of time exploring women social positions. This is what we expect, but besides Feminism,  Aristotle tends to have more texts related to women. In addition, in year 1949, female is a popular topic.  
 
 
 ```{r,echo=FALSE, message=FALSE}
@@ -203,6 +203,14 @@ beeswarm(sentence_length~school, data = all_text_f_date, horizontal=TRUE,
 
 ```
 
+From above three graphs, we can see that on the question of women, many phisolophers show their arguments from different perspectives. They have large conversations there. 
+
+#### 3.3 Data Analysis: Sentiment Analysis
+Sentiment analysis can help us determine whether the sentence is positive, negative or neutral. It is useful for us to gain an overview of all schools' opinions behind certain topics. So we then do sentiment analysia so that we can see how philosophers shift between different sentiments.
+```{r}
+head(sentence.list)
+
+```
 
 #### 3.4 KMeans Clustering: grouping authors emotions
 
@@ -239,7 +247,7 @@ From above clustering charts, we apply KMeans on dataset containing sentiment sc
 
 # 4. Data Analysis - Topic Modeling 
 ## 4.1 Topic Modeling 
-We first perfromed text mining and text basic processing, then I gengerate document-term matrices and run LDA. I set to select 15 topic groups, and it is shown in the following:
+We first performed text mining and text basic processing, then I generate document-term matrices and run LDA. For topic modeling, I prepare a corpus of sentence snipets as follows: I remove punctuation, lowercase, common(nonsense) words, duplicate key words and blankspaces. I set to select 15 topic groups, and it is shown in the following:
 
 Based on the most popular terms and the most salient terms for each topic, we assign a hashtag to each topic: c("temporal", "society_role", "action", "demand", "sex", "doubt", "perception", "moral", "equality", "freedom", "family_role", "virgin", "love", "desire", "ethic"). 
 
@@ -291,7 +299,7 @@ for(i in 1:k){
 ```
 
 
-```{r}
+```{r, echo=FALSE, warning=FALSE}
 topics.terms
 ```
 
@@ -464,7 +472,7 @@ wordcloud(words = names(AP_freq_w),
           scale = c(8,0.3))
 ```
 
-From above wordcloud, we can see that keywords such as like, must, eggs, first are frequently used by school Aristotle when they talked about women. The top twenty keywords include animals, organ, seman, distinguished and so on. Below is an example of Aristotle's sentence with keyword organ:
+The word cloud shows additional words that occur frequently and could be of interest for further analysis. From above word cloud, we can see that keywords such as like, must, eggs, first are frequently used by school Aristotle when they talked about women. The top twenty words include animals, organ, seman, distinguished and so on. They words could provide more context around the most frequently occurring words and help to gain a better understanding of the main themes. These words reflect Aristotle's gender bias view on female that women as subject to men.From these words, we rarely see positive image of women. Below is an example of Aristotle's sentence with keyword organ:
 
 ```{r}
 test_A <- grepl("organ|seman", AP_text)
@@ -472,7 +480,7 @@ AP_text <- AP_text[test_A]
 AP_text[7]
 ```
 
-From this example, we can see that for Aristotle, women's purpose is to give birth to children. That opinion is biased and not correct. 
+From this example, we can see that for Aristotle, women's purpose is to give birth to children. His opinion is biased and not acceptable in today's world. 
 
 
 ```{r}
@@ -489,17 +497,18 @@ barplot(colSums(s),
         ylab = 'Count')
 ```
 
-From sentiment bar chart, we could see that besides two highest bars of negative and positive, most school Aristotle's sentences contain words which have sentiments such as fear, sadness and trust.
+The bar plot shows the count of words in the text, associated with each emotion. Negative emotions in Aristotle's text appear more oftern.
+This bar chart demonstrates that words associated with the negative emotion occurred about six hundred times in the text, whereas words associated with the positive emotion of “surprise” occurred less than 200 times.From sentiment bar chart, it reflects emotions classification, we could see that besides  two highest bars of negative and positive, most school Aristotle's sentences contain words which have sentiments such as fear, sadness and trust.
 
 
 
 # 6. Conclusion
-All in all, based on the analysis, we can see that There has been increased empirical research on women’s underrepresentation in philosophy at various levels; however, there is a clear pattern that women are underrepresented in philosophy school Aristotle. At year 1949, Feminist philosophy has become mainstream, and school Feminism bring attention to women: What are women's role" and discussed gender of roles and responsibilities. 
+All in all, based on the analysis, we can see that there has been increased empirical research on women’s underrepresentation in philosophy at various levels; however, there is a clear pattern that women are unequally in philosophy school Aristotle. At year 1949, Feminist philosophy has become mainstream, and school Feminism bring attention to women: What are women's role" and discussed gender of roles and responsibilities. 
 
 
 
 # 7. Issues and Potential Biases
-There are issues on sentiment analysis. Since there are anbiguous words used to describe authors' perspectives on gender roles; for example: "Conversely, if men in general are taller than women, then the tallest man is taller than the tallest woman." It is clearly that Aristotle thought women are not equal to men and female are inferior; however, words he used are taller, tallest and than, so sentiment analysis thinks of this sentence with emotions trust, positive. That is totally opposite of Arritotle's view, so sentiment analysis has some limitations on philosophy text data, and for further study, we might need to manually go through each text and label them. 
+There are issues on sentiment analysis. Since there are ambiguous words used to describe authors' perspectives on gender roles; for example: "Conversely, if men in general are taller than women, then the tallest man is taller than the tallest woman." It is clearly that Aristotle thought women are not equal to men and female are inferior; however, words he used are taller, tallest and than, so sentiment analysis thinks of this sentence with emotions trust, positive. That is totally opposite of Aristotle's view, so sentiment analysis has some limitations on philosophy text data, and for further study, we might need to manually go through each text and label them. 
 
 ```{r}
 textdata[textdata$sentence_spacy=="Conversely, if men in general are taller than women, then the tallest man is taller than the tallest woman.",  ]
