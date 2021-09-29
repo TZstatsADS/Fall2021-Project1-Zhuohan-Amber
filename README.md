@@ -9,10 +9,11 @@ This is the first and only *individual* (as opposed to *team*) project this seme
 
 Term: Fall 2021
 
-+ Projec title: Project one
-+ This project is conducted by [your name]
++ Projec title: What do different philosophy schools think of women?
++ This project is conducted by Zhuohan(Amber) Zhang
 
-+ Project summary: [a short summary] Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
++ Project summary: Aristotle says that men are ''superior'' and women are ''inferior,' Didi it mean that Aristotle is hostile to female? What are Aristotle and Polato's view on women?
+In this project, we stand from data perspective to discover what different philosophy schools thought about female. I conducted sentiment analysis to determine what Aristotle and Polato's attitudes towards women?
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
